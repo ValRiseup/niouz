@@ -1,0 +1,62 @@
+.skeleton-card {
+    background-color: #161B22;
+    border: 1px solid #21262d;
+    border-radius: 8px;
+    overflow: hidden;
+    height: 100%;
+}
+
+.skeleton-image {
+    width: 100%;
+    height: 180px;
+    background-color: #21262d;
+    position: relative;
+    overflow: hidden;
+}
+
+.skeleton-content {
+    padding: 1rem;
+}
+
+.skeleton-title {
+    height: 20px;
+    width: 90%;
+    background-color: #21262d;
+    border-radius: 4px;
+    margin-bottom: 0.75rem;
+}
+
+.skeleton-title-short {
+    height: 20px;
+    width: 60%;
+    background-color: #21262d;
+    border-radius: 4px;
+}
+
+/* Shimmer effect */
+.skeleton-image,
+.skeleton-title,
+.skeleton-title-short {
+    position: relative;
+    overflow: hidden;
+}
+
+.skeleton-image::after,
+.skeleton-title::after,
+.skeleton-title-short::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: linear-gradient(90deg, transparent 25%, rgba(255, 255, 255, 0.05) 50%, transparent 75%);
+    transform: translateX(-100%);
+    animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+    100% {
+        transform: translateX(100%);
+    }
+} 

@@ -1,0 +1,200 @@
+.source-selector-container {
+  background-color: #161B22;
+  border-radius: 12px;
+  border: 1px solid #21262d;
+  overflow: hidden;
+}
+
+.source-tabs {
+  display: flex;
+  background-color: #0D1117;
+  border-bottom: 1px solid #21262d;
+  padding: 0 1rem;
+}
+
+.tab-button {
+  background-color: transparent;
+  border: none;
+  color: #8B949E;
+  padding: 1rem;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: all 0.2s ease-in-out;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+}
+
+.tab-button:hover {
+  color: #E6EDF3;
+}
+
+.tab-button.active {
+  color: #E6EDF3;
+  border-bottom-color: #C89BFF;
+}
+
+.source-list-header {
+  display: flex;
+  justify-content: flex-end;
+  padding: 0.75rem 1.5rem;
+  border-bottom: 1px solid #21262d;
+}
+
+.select-all-button {
+  background-color: transparent;
+  border: 1px solid #30363d;
+  color: #8B949E;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  font-weight: 500;
+  transition: all 0.2s ease-in-out;
+}
+
+.select-all-button:hover {
+  background-color: #21262d;
+  border-color: #8B949E;
+  color: #E6EDF3;
+}
+
+.source-list {
+  padding: 1.5rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+.source-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.source-checkbox {
+  position: relative;
+  display: flex;
+  cursor: pointer;
+  user-select: none;
+}
+
+.source-checkbox input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.checkmark {
+  height: 20px;
+  width: 20px;
+  background-color: #0D1117;
+  border: 1px solid #30363d;
+  border-radius: 6px;
+  transition: all 0.2s ease-in-out;
+}
+
+.source-checkbox:hover .checkmark {
+  border-color: #C89BFF;
+}
+
+.source-checkbox input:checked ~ .checkmark {
+  background-color: #5825A6;
+  border-color: #C89BFF;
+}
+
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+.quality-dot-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.quality-dot-container .tooltip-text {
+  visibility: hidden;
+  width: 120px;
+  background-color: #21262d;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 150%;
+  left: 50%;
+  margin-left: -60px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.quality-dot-container:hover .tooltip-text {
+  visibility: visible;
+  opacity: 1;
+}
+
+.source-checkbox input:checked ~ .checkmark:after {
+  display: block;
+}
+
+.quality-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.quality-5 { background-color: #23d160; }
+.quality-4 { background-color: #7957d5; }
+.quality-3 { background-color: #ffdd57; }
+.quality-2 { background-color: #ff3860; }
+.quality-1 { background-color: #b5b5b5; }
+
+.source-name {
+  font-size: 0.9rem;
+  color: #E6EDF3;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  flex-grow: 1;
+}
+
+.article-count {
+  font-size: 0.8rem;
+  color: #8B949E;
+  background-color: #21262d;
+  padding: 0.1rem 0.4rem;
+  border-radius: 4px;
+}
+
+.solo-button {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  background-color: transparent;
+  border: 1px solid #30363d;
+  color: #8B949E;
+  padding: 0.25rem 0.5rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  transition: all 0.2s ease-in-out;
+}
+
+.solo-button:hover {
+  background-color: #21262d;
+  color: #E6EDF3;
+  border-color: #8B949E;
+}
+
+.solo-button svg {
+  width: 14px;
+  height: 14px;
+  stroke: currentColor;
+} 
