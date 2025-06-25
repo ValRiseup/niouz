@@ -24,7 +24,7 @@ const FilterControls = ({
   activeLanguage,
   onLanguageChange,
 }) => {
-  const [showSourceSelector, setShowSourceSelector] = useState(true);
+  const [showSourceSelector, setShowSourceSelector] = useState(false);
 
   return (
     <div className="filter-controls-container">
