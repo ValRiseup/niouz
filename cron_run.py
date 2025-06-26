@@ -54,7 +54,7 @@ def main():
         
         # Run the cron script
         result = subprocess.run(
-            ['python', cron_script],
+            ['python3', cron_script],
             cwd=backend_dir,
             capture_output=True,
             text=True,

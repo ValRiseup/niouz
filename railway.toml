@@ -2,14 +2,11 @@
 builder = "nixpacks"
 
 [deploy]
-startCommand = "cd backend && python server.py"
+startCommand = "cd backend && python3 server.py"
 healthcheckPath = "/"
 healthcheckTimeout = 100
 restartPolicyType = "ON_FAILURE"
 restartPolicyMaxRetries = 10
 
 [env]
-PYTHONPATH = "backend"
-
-[variables]
-PORT = "5001" 
+PYTHONPATH = "./backend" 
