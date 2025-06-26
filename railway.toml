@@ -1,3 +1,3 @@
 [deploy]
-startCommand = "python3 backend/server.py"
+startCommand = "python3 backend/server_fallback.py"
 healthcheckPath = "/" 

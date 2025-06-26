@@ -30,3 +30,8 @@ venv/
 *.html
 
 backend/venv/
+
+# Database files
+*.db
+news.db
+backend/news.db
