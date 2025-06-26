@@ -1,3 +1,0 @@
-[deploy]
-startCommand = "python ultra_simple.py"
-healthcheckPath = "/" 
