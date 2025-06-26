@@ -1,1 +1,1 @@
-web: python3 backend/server_fallback.py 
+web: python3 minimal_server.py 
