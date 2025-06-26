@@ -1,1 +1,1 @@
-web: python3 simple_http.py 
+web: python simple_http.py 
