@@ -1,9 +1,10 @@
-from flask import Flask, Response, request
+from flask import Flask, Response, request, jsonify
 import subprocess
 import sys
 import os
 from flask_cors import CORS
 import signal
+from database import db_manager
 
 app = Flask(__name__)
 CORS(app)
@@ -22,6 +23,79 @@ def health_check():
         "message": "AI News Backend is running",
         "version": "1.0.0"
     }
+
+@app.route('/api/articles', methods=['GET'])
+def get_articles():
+    """Get recent articles from database"""
+    try:
+        limit = request.args.get('limit', 50, type=int)
+        language = request.args.get('language', 'all')
+        
+        articles = db_manager.get_recent_articles(limit=limit, language=language)
+        
+        return jsonify({
+            "success": True,
+            "data": articles,
+            "count": len(articles)
+        })
+    except Exception as e:
+        return jsonify({
+            "success": False,
+            "error": str(e)
+        }), 500
+
+@app.route('/api/topics', methods=['GET'])
+def get_topics():
+    """Get recent topics from database"""
+    try:
+        limit = request.args.get('limit', 20, type=int)
+        
+        topics = db_manager.get_recent_topics(limit=limit)
+        
+        return jsonify({
+            "success": True,
+            "data": topics,
+            "count": len(topics)
+        })
+    except Exception as e:
+        return jsonify({
+            "success": False,
+            "error": str(e)
+        }), 500
+
+@app.route('/api/news-data', methods=['GET'])
+def get_news_data():
+    """Get combined articles and topics data (for compatibility with frontend)"""
+    try:
+        # Get query parameters
+        articles_limit = request.args.get('articles_limit', 100, type=int)
+        topics_limit = request.args.get('topics_limit', 20, type=int)
+        language = request.args.get('language', 'all')
+        
+        # Fetch data from database
+        articles = db_manager.get_recent_articles(limit=articles_limit, language=language)
+        topics = db_manager.get_recent_topics(limit=topics_limit)
+        
+        # Format response to match frontend expectations
+        response_data = {
+            "articles": articles,
+            "topics": topics
+        }
+        
+        return jsonify({
+            "success": True,
+            "data": response_data,
+            "meta": {
+                "articles_count": len(articles),
+                "topics_count": len(topics),
+                "last_updated": articles[0]["created_at"] if articles else None
+            }
+        })
+    except Exception as e:
+        return jsonify({
+            "success": False,
+            "error": str(e)
+        }), 500
 
 @app.route('/refresh-data', methods=['GET'])
 def refresh_data():

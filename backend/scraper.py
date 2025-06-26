@@ -14,6 +14,7 @@ import google.generativeai as genai
 from google.generativeai import types
 from datetime import datetime, timezone
 import argparse
+from database import db_manager
 
 # Configure the Gemini client
 # Make sure to set the GEMINI_API_KEY environment variable
@@ -515,17 +516,9 @@ def main():
     print(f"🚀 [SCRAPER] ===== AI ANALYSIS RESULTS =====", flush=True)
     print(f"🚀 [SCRAPER] Generated {len(topics)} topics from {len(unique_articles)} articles", flush=True)
 
-    # Determine the output path relative to the script's location
-    print(f"🚀 [SCRAPER] ===== PREPARING OUTPUT =====", flush=True)
-    script_dir = os.path.dirname(os.path.abspath(__file__))
-    output_path = os.path.join(script_dir, '../src/data.js')
-    print(f"🚀 [SCRAPER] Output path: {output_path}", flush=True)
-
-    output_data = {
-        "articles": unique_articles,
-        "topics": topics
-    }
-
+    # Store data in database
+    print(f"🚀 [SCRAPER] ===== STORING IN DATABASE =====", flush=True)
+    
     # Calculate some statistics
     total_sources = len(set(article['source'] for article in unique_articles))
     languages = set(article['language'] for article in unique_articles)
@@ -535,6 +528,47 @@ def main():
     print(f"🚀 [SCRAPER] Total sources: {total_sources}", flush=True)
     print(f"🚀 [SCRAPER] Languages: {languages}", flush=True)
     print(f"🚀 [SCRAPER] Topics generated: {len(topics)}", flush=True)
+
+    # Store articles and topics in database
+    try:
+        print(f"🗄️  [DB] Storing {len(unique_articles)} articles and {len(topics)} topics in database...", flush=True)
+        db_manager.store_articles_and_topics(unique_articles, topics)
+        
+        # Also keep the JSON file for backward compatibility (frontend migration)
+        script_dir = os.path.dirname(os.path.abspath(__file__))
+        output_path = os.path.join(script_dir, '../src/data.js')
+        output_data = {
+            "articles": unique_articles,
+            "topics": topics
+        }
+        
+        with open(output_path, 'w', encoding='utf-8') as f:
+            f.write("export const newsData = ")
+            json.dump(output_data, f, indent=4, ensure_ascii=False)
+            f.write(";")
+        
+        file_size = os.path.getsize(output_path) / 1024  # KB
+        print(f"🗄️  [DB] ✅ Data stored in database successfully", flush=True)
+        print(f"📄 [JSON] ✅ Backup JSON file written ({file_size:.1f} KB)", flush=True)
+        
+    except Exception as e:
+        print(f"🗄️  [DB] ❌ Database storage error: {e}", flush=True)
+        # Fallback to JSON file only
+        print(f"🗄️  [DB] Falling back to JSON file storage", flush=True)
+        script_dir = os.path.dirname(os.path.abspath(__file__))
+        output_path = os.path.join(script_dir, '../src/data.js')
+        output_data = {
+            "articles": unique_articles,
+            "topics": topics
+        }
+        
+        with open(output_path, 'w', encoding='utf-8') as f:
+            f.write("export const newsData = ")
+            json.dump(output_data, f, indent=4, ensure_ascii=False)
+            f.write(";")
+        
+        file_size = os.path.getsize(output_path) / 1024  # KB
+        print(f"📄 [JSON] ✅ JSON file written successfully ({file_size:.1f} KB)", flush=True)
 
     if unique_articles and not args.all:
         latest_article_date = max(
@@ -547,14 +581,6 @@ def main():
     elif args.all:
         print(f"🚀 [SCRAPER] ⚠️  Skipping timestamp update (--all mode)", flush=True)
 
-    print(f"🚀 [SCRAPER] Writing data to file...", flush=True)
-    with open(output_path, 'w', encoding='utf-8') as f:
-        f.write("export const newsData = ")
-        json.dump(output_data, f, indent=4, ensure_ascii=False)
-        f.write(";")
-    
-    file_size = os.path.getsize(output_path) / 1024  # KB
-    print(f"🚀 [SCRAPER] ✅ File written successfully ({file_size:.1f} KB)", flush=True)
     print(f"🚀 [SCRAPER] ===== SCRAPER COMPLETE =====", flush=True)
     print(f"🚀 [SCRAPER] 🎉 AI News scraping and analysis finished!", flush=True)
 

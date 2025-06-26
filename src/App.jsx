@@ -5,7 +5,7 @@ import NewsFeed from './components/NewsFeed';
 import Footer from './components/Footer';
 import ScrollToTopButton from './components/ScrollToTopButton';
 import SourceSelector from './components/SourceSelector';
-import { newsData } from './data';
+import { useNewsData } from './hooks/useNewsData';
 import configUrl from './config.json?url';
 
 function App() {
@@ -13,6 +13,10 @@ function App() {
   const [sourceCategories, setSourceCategories] = useState(null);
   const [viewMode, setViewMode] = useState('articles'); // 'articles' or 'topics'
   const [showSourceSelector, setShowSourceSelector] = useState(false);
+  const [refreshTrigger, setRefreshTrigger] = useState(0);
+  
+  // Fetch news data from API
+  const { newsData, loading: newsDataLoading, error: newsDataError, refetch } = useNewsData(refreshTrigger);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -101,8 +105,24 @@ function App() {
     setSelectedSources(newSelectedSources);
   };
   
-  if (!sourceCategories) {
-    return <div>Loading configuration...</div>;
+  if (!sourceCategories || newsDataLoading) {
+    return (
+      <div className="loading-container" style={{ 
+        display: 'flex', 
+        justifyContent: 'center', 
+        alignItems: 'center', 
+        height: '100vh',
+        fontSize: '1.1em',
+        color: '#6b7280'
+      }}>
+        Loading {!sourceCategories ? 'configuration' : 'news data'}...
+        {newsDataError && (
+          <div style={{ color: '#ef4444', marginTop: '10px' }}>
+            Error: {newsDataError}
+          </div>
+        )}
+      </div>
+    );
   }
 
   return (
@@ -124,10 +144,12 @@ function App() {
           />
         )}
         <NewsFeed
+          newsData={newsData}
           selectedSources={selectedSources}
           activeLanguage={activeLanguage}
           viewMode={viewMode}
           onFilterSourcesClick={() => setShowSourceSelector(s => !s)}
+          onRefreshData={refetch}
         />
       </main>
       <Footer />

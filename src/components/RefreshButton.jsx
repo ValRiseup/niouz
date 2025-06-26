@@ -4,7 +4,7 @@ import RefreshIcon from '../assets/icons/refresh.svg?react';
 import DotsIcon from '../assets/icons/dots.svg?react';
 import './RefreshButton.css';
 
-const RefreshButton = () => {
+const RefreshButton = ({ onRefreshData }) => {
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [progress, setProgress] = useState(0);
   const [sourceName, setSourceName] = useState('');
@@ -59,7 +59,12 @@ const RefreshButton = () => {
         setProgress(100);
         setSourceName('Feed refreshed successfully!');
         setTimeout(() => {
-          window.location.reload();
+          if (onRefreshData) {
+            onRefreshData();
+          }
+          setIsRefreshing(false);
+          setSourceName('');
+          setProgress(0);
         }, 1500);
         eventSource.close();
       } else if (data.startsWith('ERROR:FATAL: GEMINI_API_KEY')) {

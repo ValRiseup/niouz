@@ -4,13 +4,12 @@ import NewsCard from './NewsCard';
 import TopicCard from './TopicCard';
 import SkeletonCard from './SkeletonCard';
 import RefreshButton from './RefreshButton';
-import { newsData } from '../data';
 import './NewsFeed.css';
 import FilterIcon from '../assets/icons/filter.svg?react';
 
 const ITEMS_PER_PAGE = 6;
 
-const NewsFeed = ({ selectedSources, activeLanguage, viewMode, onFilterSourcesClick }) => {
+const NewsFeed = ({ newsData, selectedSources, activeLanguage, viewMode, onFilterSourcesClick, onRefreshData }) => {
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(1);
@@ -111,7 +110,7 @@ const NewsFeed = ({ selectedSources, activeLanguage, viewMode, onFilterSourcesCl
             </button>
           </div>
           <div className="feed-controls-right">
-            <RefreshButton />
+            <RefreshButton onRefreshData={onRefreshData} />
           </div>
         </div>
       )}
@@ -176,7 +175,7 @@ const NewsFeed = ({ selectedSources, activeLanguage, viewMode, onFilterSourcesCl
           </p>
           {viewMode === 'articles' && (
             <div className="no-articles-actions">
-              <RefreshButton />
+              <RefreshButton onRefreshData={onRefreshData} />
               <button 
                 className="feed-action-button" 
                 onClick={onFilterSourcesClick}
