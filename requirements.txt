@@ -1,1 +1,1 @@
-
+# Minimal Python dependencies for Railway detection
