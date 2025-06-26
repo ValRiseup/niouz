@@ -106,7 +106,7 @@ def refresh_data():
         try:
             script_dir = os.path.dirname(os.path.abspath(__file__))
             # Use system python in production, venv python in development
-            python_executable = 'python' if os.environ.get('RAILWAY_ENVIRONMENT') else os.path.join(script_dir, 'venv/bin/python')
+            python_executable = 'python3' if os.environ.get('RAILWAY_ENVIRONMENT') else os.path.join(script_dir, 'venv/bin/python')
             scraper_path = os.path.join(script_dir, 'scraper.py')
             
             # Build command based on mode parameter
