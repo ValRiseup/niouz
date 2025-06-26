@@ -112,24 +112,23 @@ function App() {
         onViewModeChange={setViewMode}
         activeLanguage={activeLanguage}
         onLanguageChange={setActiveLanguage}
-        onFilterSourcesClick={() => setShowSourceSelector(s => !s)}
       />
       <main className="main-container">
-        {showSourceSelector ? (
-            <SourceSelector
-                groupedSources={orderedGroupedSources}
-                selectedSources={selectedSources}
-                setSelectedSources={setSelectedSources}
-                onSoloSelect={handleSoloSelect}
-                activeLanguage={activeLanguage}
-            />
-        ) : (
-            <NewsFeed 
-              selectedSources={selectedSources} 
-              activeLanguage={activeLanguage} 
-              viewMode={viewMode}
-            />
+        {showSourceSelector && (
+          <SourceSelector
+            groupedSources={orderedGroupedSources}
+            selectedSources={selectedSources}
+            setSelectedSources={setSelectedSources}
+            onSoloSelect={handleSoloSelect}
+            onClose={() => setShowSourceSelector(false)}
+          />
         )}
+        <NewsFeed
+          selectedSources={selectedSources}
+          activeLanguage={activeLanguage}
+          viewMode={viewMode}
+          onFilterSourcesClick={() => setShowSourceSelector(s => !s)}
+        />
       </main>
       <Footer />
       <ScrollToTopButton />

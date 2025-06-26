@@ -54,9 +54,46 @@ a:hover {
 .main-content {
 }
 
+/* Mobile responsiveness */
 @media (max-width: 768px) {
   .App {
-    /* ... existing code ... */
+    padding: 0 1rem;
+  }
+  
+  .main-container {
+    padding: 0 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .App {
+    padding: 0 0.75rem;
+  }
+  
+  .main-container {
+    padding: 0 0.75rem;
+  }
+}
+
+@media (max-width: 320px) {
+  .App {
+    padding: 0 0.5rem;
+  }
+  
+  .main-container {
+    padding: 0 0.5rem;
+  }
+}
+
+/* Improve mobile scroll behavior */
+@media (max-width: 768px) {
+  body {
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  /* Reduce background animation on mobile for better performance */
+  body {
+    background-attachment: local;
   }
 }
 

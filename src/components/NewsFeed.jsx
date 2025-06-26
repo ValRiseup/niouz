@@ -3,20 +3,22 @@ import Masonry from 'react-masonry-css';
 import NewsCard from './NewsCard';
 import TopicCard from './TopicCard';
 import SkeletonCard from './SkeletonCard';
+import RefreshButton from './RefreshButton';
 import { newsData } from '../data';
 import './NewsFeed.css';
+import FilterIcon from '../assets/icons/filter.svg?react';
 
 const ITEMS_PER_PAGE = 6;
 
-const NewsFeed = ({ selectedSources, activeLanguage, viewMode }) => {
+const NewsFeed = ({ selectedSources, activeLanguage, viewMode, onFilterSourcesClick }) => {
   const [items, setItems] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
   const observer = useRef();
-  
+
   // State for Topic View
-  const [sortOrder, setSortOrder] = useState('recency'); // 'recency', 'articles', 'sources'
+  const [sortOrder, setSortOrder] = useState('sources'); // 'sources', 'recency', 'articles'
   const [searchTerm, setSearchTerm] = useState('');
 
   const sortedArticles = useMemo(() => (newsData.articles || []).sort((a, b) => {
@@ -60,67 +62,75 @@ const NewsFeed = ({ selectedSources, activeLanguage, viewMode }) => {
   const data = viewMode === 'articles' ? filteredArticles : processedTopics;
 
   // Breakpoints for Masonry layout
-  const masonryBreakpointColumns = {
+  const masonryBreakpointColumns = viewMode === 'topics' ? {
+    default: 2,
+    768: 1
+  } : {
     default: 3,
     1024: 2,
     600: 1
   };
 
   useEffect(() => {
-    setItems([]);
-    setPage(1);
-    setHasMore(true);
-    setLoading(true);
-    const timer = setTimeout(() => {
-        setItems(data.slice(0, ITEMS_PER_PAGE));
-        setHasMore(data.length > ITEMS_PER_PAGE);
-        setLoading(false);
-    }, 500);
+    setItems(data.slice(0, ITEMS_PER_PAGE));
+    setLoading(false);
+}, [data, viewMode]);
 
-    return () => clearTimeout(timer);
-  }, [selectedSources, activeLanguage, viewMode, sortOrder, searchTerm]);
-  
+  // Infinite scroll logic
   const lastItemElementRef = useCallback(node => {
     if (loading) return;
     if (observer.current) observer.current.disconnect();
     observer.current = new IntersectionObserver(entries => {
-        if (entries[0].isIntersecting && hasMore) {
-            setPage(prevPage => prevPage + 1);
-        }
+      if (entries[0].isIntersecting && items.length < data.length) {
+        setItems(prevItems => [
+            ...prevItems,
+            ...data.slice(prevItems.length, prevItems.length + ITEMS_PER_PAGE)
+        ]);
+      }
     });
     if (node) observer.current.observe(node);
-  }, [loading, hasMore]);
-
-  useEffect(() => {
-    if (page > 1) {
-        const newItems = data.slice(0, page * ITEMS_PER_PAGE);
-        setItems(newItems);
-        setHasMore(newItems.length < data.length);
-    }
-  }, [page, data]);
+  }, [loading, items.length, data]);
 
   return (
-    <main className="news-feed-container">
+    <>
       <div className="news-feed-header">
         <h2>{viewMode === 'articles' ? "Fil d'Actualités de l'IA" : "Sujets d'Actualités de l'IA"}</h2>
         <p>{viewMode === 'articles' ? "Articles sélectionnés des meilleures sources IA" : "Sujets regroupés à partir de plusieurs sources"}</p>
       </div>
+
+      {viewMode === 'articles' && (
+        <div className="feed-controls">
+          <div className="feed-controls-left">
+            <button 
+              className="feed-action-button" 
+              onClick={onFilterSourcesClick}
+              aria-label="Ouvrir le filtre des sources"
+            >
+              <FilterIcon />
+              <span>Sources</span>
+            </button>
+          </div>
+          <div className="feed-controls-right">
+            <RefreshButton />
+          </div>
+        </div>
+      )}
 
       {viewMode === 'topics' && (
         <div className="topic-controls">
             <div className="topic-search">
                 <input 
                     type="text" 
-                    placeholder="Search topics..."
+                    placeholder="Rechercher des sujets..."
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
                 />
             </div>
             <div className="topic-sort">
-                <span>Sort by:</span>
-                <button className={sortOrder === 'recency' ? 'active' : ''} onClick={() => setSortOrder('recency')}>Recency</button>
-                <button className={sortOrder === 'articles' ? 'active' : ''} onClick={() => setSortOrder('articles')}>Articles</button>
+                <span>Trier par:</span>
                 <button className={sortOrder === 'sources' ? 'active' : ''} onClick={() => setSortOrder('sources')}>Sources</button>
+                <button className={sortOrder === 'articles' ? 'active' : ''} onClick={() => setSortOrder('articles')}>Articles</button>
+                <button className={sortOrder === 'recency' ? 'active' : ''} onClick={() => setSortOrder('recency')}>Récence</button>
             </div>
         </div>
       )}
@@ -153,9 +163,33 @@ const NewsFeed = ({ selectedSources, activeLanguage, viewMode }) => {
       )}
 
       {!loading && items.length === 0 && (
-        <p className="no-articles-message">{viewMode === 'articles' ? "Aucun article trouvé" : "Aucun sujet trouvé"}.</p>
+        <div className="no-articles-message">
+          <div className="no-articles-icon">
+            {viewMode === 'articles' ? '📰' : '📁'}
+          </div>
+          <h3>{viewMode === 'articles' ? 'Aucun article trouvé' : 'Aucun sujet trouvé'}</h3>
+          <p>
+            {viewMode === 'articles' 
+              ? 'Aucun article ne correspond aux filtres sélectionnés.' 
+              : 'Aucun sujet ne correspond aux critères de recherche.'
+            }
+          </p>
+          {viewMode === 'articles' && (
+            <div className="no-articles-actions">
+              <RefreshButton />
+              <button 
+                className="feed-action-button" 
+                onClick={onFilterSourcesClick}
+                aria-label="Modifier les filtres des sources"
+              >
+                <FilterIcon />
+                <span>Modifier les filtres</span>
+              </button>
+            </div>
+          )}
+        </div>
       )}
-    </main>
+    </>
   );
 };
 

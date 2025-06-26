@@ -21,4 +21,29 @@
 
 .footer p:first-child {
     font-style: italic;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+    .footer {
+        padding: 1.5rem 1rem;
+        margin-top: 3rem;
+    }
+    
+    .footer p {
+        font-size: 0.85rem;
+        margin: 0.4rem 0;
+    }
+}
+
+@media (max-width: 480px) {
+    .footer {
+        padding: 1.25rem 0.75rem;
+        margin-top: 2.5rem;
+    }
+    
+    .footer p {
+        font-size: 0.8rem;
+        margin: 0.35rem 0;
+    }
 } 

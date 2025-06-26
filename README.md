@@ -1,68 +1,118 @@
-# React + Vite
+# Les Actualités de l'IA
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Une plateforme d'actualités IA avec génération intelligente de sujets orchestrée par l'intelligence artificielle.
 
-Currently, two official plugins are available:
+## 🚀 Fonctionnalités Principales
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### 📰 Agrégation Multi-Sources
+- Scraping automatisé de **70+ sources** spécialisées en IA
+- Sources en français et anglais (médias, blogs, recherche, entreprises)
+- Filtrage intelligent par source et langue
 
-## Expanding the ESLint configuration
+### 🧠 Génération Intelligente de Sujets avec Gemini
+- **Architecture orchestrée par IA** : Utilise Google Gemini pour analyser et regrouper les articles
+- **Regroupement automatique** : Les articles traitant du même événement/sujet sont intelligemment groupés
+- **Synthèse journalistique** : Chaque sujet génère un résumé consolidé de tous les articles connexes
+- **Catégorisation automatique** : Corporate, Technology, Research, Ethics, Community
+- **Extraction de mots-clés** : Identification automatique des termes techniques pertinents
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### 🎯 Interface Utilisateur Avancée
+- **Double vue** : Articles individuels ou sujets regroupés
+- **Cartes de sujets expansibles** : Voir tous les articles d'un même sujet
+- **Filtrage et recherche** avancés
+- **Design responsive** avec layout Masonry
+- **Scroll infini** pour une navigation fluide
 
-# AI News
+## 🛠️ Architecture Technique
 
-This project is a news aggregator for AI-related topics.
-
-## Frontend (Vite + React)
-
-To run the frontend development server:
-
+### Frontend (React + Vite)
 ```bash
 npm install
 npm run dev
 ```
 
-## Backend (Python + Flask)
+### Backend (Python + IA)
+Le backend utilise une architecture hybride combinant :
+- **Scraping multi-threadé** pour l'agrégation de contenu
+- **API Google Gemini** pour l'analyse et le regroupement intelligent
+- **Pipeline de traitement** automatisé
 
-The backend is a simple Flask server that runs a Python script to scrape and refresh the news data.
+#### Configuration Requise
 
-### Backend Setup
+1. **Clé API Gemini** (obligatoire)
+   ```bash
+   export GEMINI_API_KEY="votre_clé_api_gemini"
+   ```
 
-It is highly recommended to use a Python virtual environment to manage dependencies and avoid conflicts with other projects.
+2. **Environnement Python**
+   ```bash
+   cd backend
+   python3 -m venv venv
+   source venv/bin/activate  # macOS/Linux
+   # ou .\\venv\\Scripts\\activate  # Windows
+   pip install -r requirements.txt
+   ```
 
-1.  **Create a virtual environment:**
-    From the project root directory, run:
-    ```bash
-    python3 -m venv backend/venv
-    ```
+3. **Lancement du scraper**
+   ```bash
+   python scraper.py
+   ```
 
-2.  **Activate the virtual environment:**
-    - On macOS and Linux:
-      ```bash
-      source backend/venv/bin/activate
-      ```
-    - On Windows:
-      ```bash
-      .\\backend\\venv\\Scripts\\activate
-      ```
-    You'll know it's active when you see `(venv)` at the beginning of your command prompt.
+#### Fonctionnement du Pipeline IA
 
-3.  **Install dependencies:**
-    With the virtual environment active, install the required packages:
-    ```bash
-    pip install -r backend/requirements.txt
-    ```
+1. **Scraping** : Collecte des articles depuis 70+ sources RSS
+2. **Préprocessing** : Nettoyage et extraction des métadonnées
+3. **Analyse Gemini** : Envoi à l'IA pour analyse sémantique
+4. **Regroupement** : Création de sujets cohérents avec articles connexes
+5. **Génération** : Production de résumés et métadonnées enrichies
 
-4.  **Run the backend server:**
-    ```bash
-    python3 backend/server.py
-    ```
-    The server will start on `http://127.0.0.1:5001`.
+## 🔧 Configuration
 
-5.  **Deactivate the virtual environment:**
-    When you're done working on the backend, you can deactivate the environment:
-    ```bash
-    deactivate
-    ```
+### Sources d'Actualités
+Les sources sont configurées dans `src/config.json` avec :
+- **Qualité** : Score de fiabilité (1-5)
+- **Langue** : Français/Anglais
+- **Catégorie** : Business, Research, Technical, etc.
+
+### Paramètres Gemini
+- **Modèle** : `gemini-1.5-flash`
+- **Timeout** : 2 minutes
+- **Analyse** : Max 100 articles par batch
+- **Critères** : Événements, entreprises, technologies, recherche
+
+## 📊 Exemple de Génération de Sujets
+
+**Input** : 50 articles sur l'IA
+**Output Gemini** :
+```json
+{
+  "topics": [
+    {
+      "name": "OpenAI GPT-4 Vision Launch",
+      "summary": "OpenAI announces GPT-4 Vision with multimodal capabilities...",
+      "articles": [/* 5 articles from different sources */],
+      "sources": ["TechCrunch", "Wired", "The Verge"],
+      "keywords": ["GPT-4", "Vision", "Multimodal", "OpenAI"],
+      "category": "Corporate"
+    }
+  ]
+}
+```
+
+## 🚦 Statut du Projet
+
+✅ **Fonctionnel** : Scraping multi-sources  
+✅ **Fonctionnel** : Génération IA de sujets avec Gemini  
+✅ **Fonctionnel** : Interface utilisateur complète  
+✅ **Fonctionnel** : Regroupement intelligent d'articles  
+🔄 **En cours** : Optimisation des performances
+
+## 🎯 Objectifs de l'Architecture IA
+
+L'objectif est de créer une **expérience de lecture optimisée** où :
+- L'utilisateur voit les **sujets d'actualité** plutôt que des articles dispersés
+- Chaque sujet regroupe **tous les médias** qui en parlent
+- La **synthèse IA** évite la redondance d'information
+- Le **regroupement automatique** révèle les tendances importantes
+
+Cette approche transforme la veille technologique en une expérience curatoriale intelligente.

@@ -41,14 +41,19 @@ const NewsCard = ({ article }) => {
   return (
     <a href={article.url} target="_blank" rel="noopener noreferrer" className="news-card-link">
         <div className="news-card">
-            <img 
-              src={article.image} 
-              alt={article.title} 
-              className="news-image" 
-              onError={(e) => { e.target.onerror = null; e.target.src=`https://picsum.photos/seed/${article.title}/400/300`}}
-            />
+            <div className="news-image-container">
+                <img 
+                  src={article.image} 
+                  alt={article.title} 
+                  className="news-image" 
+                  onError={(e) => { e.target.onerror = null; e.target.src=`https://picsum.photos/seed/${article.title}/400/300`}}
+                />
+                {article.category && (
+                    <div className="news-category">{article.category}</div>
+                )}
+                <div className="news-source-badge">{article.source}</div>
+            </div>
             <div className="news-content">
-                <p className="news-source">{article.source}</p>
                 <h3>{article.title}</h3>
                 <div className="news-meta">
                   {article.date && <span className="news-date">{timeAgo(article.date)}</span>}

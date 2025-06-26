@@ -1,14 +1,11 @@
 .source-selector-container {
   padding: 1.5rem;
-  background: linear-gradient(to bottom, rgba(58, 58, 60, 0.7), rgba(44, 44, 46, 0.6));
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid;
-  border-image-source: linear-gradient(to bottom left, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.1));
-  border-image-slice: 1;
-  border-radius: 16px;
+  background-color: #161b22;
+  border: 1px solid #30363d;
+  border-radius: 12px;
   box-shadow: 0 10px 30px rgba(0,0,0,0.2);
   margin-top: 1.5rem;
+  position: relative;
 }
 
 .source-selector-header {
@@ -16,6 +13,7 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 1.5rem;
+  padding-right: 3rem;
 }
 
 .source-selector-header h3 {
@@ -24,25 +22,54 @@
   color: #f0f0f0;
 }
 
-.selection-controls button {
-  background: none;
-  border: 1px solid #555;
-  color: #a0a0a5;
+.selection-controls {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.selection-controls .control-button {
+  background-color: #21262d;
+  border: 1px solid #30363d;
+  color: #c9d1d9;
   padding: 0.5rem 1rem;
   cursor: pointer;
   border-radius: 8px;
-  margin-left: 0.5rem;
   transition: all 0.2s ease-in-out;
 }
 
-.selection-controls button:hover {
-  background-color: #3a3a3c;
-  border-color: #777;
+.selection-controls .control-button:hover {
+  background-color: #30363d;
+  border-color: #8b949e;
   color: #fff;
 }
 
+.close-button {
+  position: absolute;
+  top: 1.25rem;
+  right: 1.25rem;
+  background: none;
+  border: none;
+  padding: 0.5rem;
+  cursor: pointer;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.close-button:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.close-button svg {
+  width: 20px;
+  height: 20px;
+  stroke: #d0d0d0;
+}
+
 .source-category {
-  margin-bottom: 1.5rem;
+  margin-bottom: 2rem;
 }
 
 .source-category:last-child {
@@ -50,68 +77,94 @@
 }
 
 .source-category h4 {
-  font-size: 1.2rem;
-  color: #f0f0f0;
-  margin-bottom: 1rem;
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: #8b949e;
+  margin: 0 0 1rem 0;
   padding-bottom: 0.5rem;
-  border-bottom: 1px solid #3a3a3c;
+  border-bottom: 1px solid #30363d;
 }
 
 .source-list {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 0.75rem;
 }
 
 .source-item {
   display: flex;
   align-items: center;
-  background-color: rgba(28, 28, 30, 0.7);
-  padding: 0.6rem 0.8rem;
+  background-color: transparent;
+  padding: 0.5rem;
   border-radius: 8px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  transition: all 0.2s ease-in-out;
+  transition: background-color 0.2s ease-in-out;
 }
 
 .source-item:hover {
-  background-color: rgba(58, 58, 60, 0.8);
-  border-color: rgba(255, 255, 255, 0.2);
+  background-color: #21262d;
 }
 
-.source-item input[type="checkbox"] {
-  width: 18px;
-  height: 18px;
-  margin-right: 1rem;
-  accent-color: #007aff;
-}
-
-.source-item label {
+.source-checkbox-label {
   flex-grow: 1;
   display: flex;
   align-items: center;
-  gap: 0.9rem;
+  gap: 0.75rem;
   cursor: pointer;
+}
+
+.custom-checkbox {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  background-color: #0d1117;
+  border: 1px solid #30363d;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.custom-checkbox-native:checked + .custom-checkbox {
+  background-color: #238636;
+  border-color: #38a54c;
+}
+
+.custom-checkbox-native {
+  display: none;
+}
+
+.custom-checkbox-native:checked + .custom-checkbox svg {
+  stroke: #fff;
+  opacity: 1;
+}
+
+.custom-checkbox svg {
+  width: 14px;
+  height: 14px;
+  opacity: 0;
+  transition: opacity 0.2s ease;
 }
 
 .source-name {
   font-size: 0.9rem;
-  color: #f0f0f0;
-  font-weight: 500;
+  color: #c9d1d9;
   flex-grow: 1;
 }
 
 .article-count {
-  font-size: 0.75rem;
-  color: #a0a0a5;
-  background-color: rgba(255,255,255,0.1);
+  font-size: 0.8rem;
+  color: #8b949e;
+  background-color: #21262d;
   padding: 0.2rem 0.5rem;
   border-radius: 6px;
+  border: 1px solid #30363d;
 }
 
 .solo-button {
-  background: none;
-  border: 1px solid #555;
-  color: #a0a0a5;
+  background-color: #21262d;
+  border: 1px solid #30363d;
+  color: #c9d1d9;
   padding: 0.3rem 0.6rem;
   font-size: 0.7rem;
   border-radius: 6px;
@@ -121,8 +174,8 @@
 }
 
 .solo-button:hover {
-  background-color: #007aff;
-  border-color: #007aff;
+  background-color: #30363d;
+  border-color: #8b949e;
   color: #fff;
 }
 
@@ -268,4 +321,137 @@
   width: 14px;
   height: 14px;
   stroke: currentColor;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .source-selector-container {
+    padding: 1rem;
+    margin-top: 1rem;
+    border-radius: 8px;
+  }
+  
+  .source-selector-header {
+    padding-right: 2.5rem;
+    margin-bottom: 1rem;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+  
+  .source-selector-header h3 {
+    font-size: 1.25rem;
+  }
+  
+  .selection-controls {
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+  
+  .selection-controls .control-button {
+    padding: 0.4rem 0.75rem;
+    font-size: 0.8rem;
+  }
+  
+  .close-button {
+    top: 1rem;
+    right: 1rem;
+    padding: 0.4rem;
+  }
+  
+  .close-button svg {
+    width: 18px;
+    height: 18px;
+  }
+  
+  .source-category h4 {
+    font-size: 1rem;
+    margin-bottom: 0.75rem;
+  }
+  
+  .source-list {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
+  
+  .source-item {
+    padding: 0.75rem 0.5rem;
+  }
+  
+  .source-checkbox-label {
+    gap: 0.5rem;
+  }
+  
+  .source-name {
+    font-size: 0.85rem;
+  }
+  
+  .article-count {
+    font-size: 0.75rem;
+    padding: 0.15rem 0.4rem;
+  }
+  
+  .solo-button {
+    margin-left: 0.5rem;
+    padding: 0.25rem 0.5rem;
+    font-size: 0.65rem;
+  }
+  
+  .source-tabs {
+    padding: 0 0.5rem;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  .tab-button {
+    padding: 0.75rem 1rem;
+    font-size: 0.85rem;
+    white-space: nowrap;
+  }
+  
+  .source-list-header {
+    padding: 0.5rem 1rem;
+  }
+  
+  .select-all-button {
+    padding: 0.4rem 0.75rem;
+    font-size: 0.75rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .source-selector-container {
+    padding: 0.75rem;
+    margin-top: 0.75rem;
+  }
+  
+  .source-selector-header h3 {
+    font-size: 1.125rem;
+  }
+  
+  .selection-controls .control-button {
+    padding: 0.35rem 0.6rem;
+    font-size: 0.75rem;
+  }
+  
+  .source-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+    padding: 1rem 0.5rem;
+  }
+  
+  .source-checkbox-label {
+    width: 100%;
+  }
+  
+  .solo-button {
+    margin-left: 0;
+    align-self: flex-end;
+  }
+  
+  .tab-button {
+    padding: 0.6rem 0.75rem;
+    font-size: 0.8rem;
+  }
 } 

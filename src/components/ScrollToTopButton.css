@@ -32,4 +32,29 @@
     background-color: rgba(60, 60, 62, 0.8);
     border-color: rgba(255, 255, 255, 0.2);
     transform: scale(1.1);
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+    .scroll-to-top {
+        bottom: 20px;
+        right: 20px;
+        width: 45px;
+        height: 45px;
+        font-size: 20px;
+    }
+    
+    .scroll-to-top:hover {
+        transform: scale(1.05);
+    }
+}
+
+@media (max-width: 480px) {
+    .scroll-to-top {
+        bottom: 16px;
+        right: 16px;
+        width: 40px;
+        height: 40px;
+        font-size: 18px;
+    }
 } 
