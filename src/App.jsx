@@ -4,14 +4,24 @@ import Header from './components/Header';
 import NewsFeed from './components/NewsFeed';
 import Footer from './components/Footer';
 import ScrollToTopButton from './components/ScrollToTopButton';
-import FilterControls from './components/FilterControls';
+import SourceSelector from './components/SourceSelector';
 import { newsData } from './data';
 import configUrl from './config.json?url';
 
 function App() {
-  const [activeCategory, setActiveCategory] = useState('all');
   const [activeLanguage, setActiveLanguage] = useState('all');
   const [sourceCategories, setSourceCategories] = useState(null);
+  const [viewMode, setViewMode] = useState('articles'); // 'articles' or 'topics'
+  const [showSourceSelector, setShowSourceSelector] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+        document.body.style.backgroundPositionY = `${window.scrollY * 0.5}px`;
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   useEffect(() => {
     fetch(configUrl)
@@ -21,10 +31,11 @@ function App() {
 
   const groupedSources = useMemo(() => {
     if (!sourceCategories) return {};
+    const articles = newsData.articles || [];
     return Object.entries(sourceCategories).reduce((acc, [category, sources]) => {
       acc[category] = sources.map(source => ({
         ...source,
-        count: newsData.filter(article => article.source === source.name).length
+        count: articles.filter(article => article.source === source.name).length
       }));
       return acc;
     }, {});
@@ -96,19 +107,29 @@ function App() {
 
   return (
     <div className="App">
-      <Header />
-      <main className="main-content">
-        <FilterControls
-          activeCategory={activeCategory}
-          onCategoryClick={setActiveCategory}
-          groupedSources={orderedGroupedSources}
-          selectedSources={selectedSources}
-          setSelectedSources={setSelectedSources}
-          onSoloSelect={handleSoloSelect}
-          activeLanguage={activeLanguage}
-          onLanguageChange={setActiveLanguage}
-        />
-        <NewsFeed activeCategory={activeCategory} selectedSources={selectedSources} activeLanguage={activeLanguage} />
+      <Header 
+        viewMode={viewMode}
+        onViewModeChange={setViewMode}
+        activeLanguage={activeLanguage}
+        onLanguageChange={setActiveLanguage}
+        onFilterSourcesClick={() => setShowSourceSelector(s => !s)}
+      />
+      <main className="main-container">
+        {showSourceSelector ? (
+            <SourceSelector
+                groupedSources={orderedGroupedSources}
+                selectedSources={selectedSources}
+                setSelectedSources={setSelectedSources}
+                onSoloSelect={handleSoloSelect}
+                activeLanguage={activeLanguage}
+            />
+        ) : (
+            <NewsFeed 
+              selectedSources={selectedSources} 
+              activeLanguage={activeLanguage} 
+              viewMode={viewMode}
+            />
+        )}
       </main>
       <Footer />
       <ScrollToTopButton />

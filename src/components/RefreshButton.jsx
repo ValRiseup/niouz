@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import ProgressDisplay from './ProgressDisplay';
-import './RefreshButton.css';
 
 const RefreshButton = () => {
   const [isRefreshing, setIsRefreshing] = useState(false);
@@ -27,6 +26,10 @@ const RefreshButton = () => {
           window.location.reload();
         }, 1500);
         eventSource.close();
+      } else if (data.startsWith('ERROR:FATAL: GEMINI_API_KEY')) {
+        setSourceName(data.substring(12));
+        eventSource.close();
+        setTimeout(() => setIsRefreshing(false), 10000);
       } else if (data.startsWith('ERROR:')) {
         setSourceName(`Error: ${data.substring(6)}`);
         eventSource.close();
@@ -56,7 +59,7 @@ const RefreshButton = () => {
         onClick={handleRefresh} 
         disabled={isRefreshing}
       >
-        {isRefreshing ? 'Refreshing...' : 'Refresh Feed'}
+        {isRefreshing ? 'Actualisation...' : 'Actualiser'}
       </button>
       {isRefreshing && <ProgressDisplay progress={progress} sourceName={sourceName} />}
     </div>

@@ -1,8 +1,14 @@
 body {
-    font-family: 'Inter', sans-serif;
-    background-color: #0D1117;
-    color: #E6EDF3;
     margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+        'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+        sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background-color: #0E1116;
+    background-image: radial-gradient(at 47% 33%, hsl(203.09, 69%, 25%) 0, transparent 59%), 
+                      radial-gradient(at 82% 65%, hsl(218.00, 39%, 25%) 0, transparent 55%);
+    color: #c9d1d9;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -11,9 +17,23 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 #root {
-    max-width: 1280px;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.app {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.main-container {
+    width: 100%;
+    max-width: 1400px;
     margin: 0 auto;
-    padding: 2rem;
+    padding: 0 1.5rem;
+    flex-grow: 1;
 }
 
 a {
@@ -38,4 +58,8 @@ a:hover {
   .App {
     /* ... existing code ... */
   }
+}
+
+* {
+    box-sizing: border-box;
 }

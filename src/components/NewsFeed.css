@@ -1,27 +1,69 @@
 .news-feed-container {
-    padding: 2rem 0;
+    padding-top: 2rem;
 }
 
 .news-feed-header {
-    text-align: left;
-    margin-bottom: 1.5rem;
+    margin-bottom: 2rem;
+    text-align: center;
 }
 
 .news-feed-header h2 {
-    font-size: 1.8rem;
-    margin: 0 0 0.5rem;
+    font-size: 32px;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: #f0f0f0;
 }
 
 .news-feed-header p {
-    font-size: 1rem;
-    color: #8B949E;
+    font-size: 17px;
+    font-weight: 400;
+    color: #a0a0a5;
     margin: 0;
 }
 
 .news-feed {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 1.5rem;
+    column-gap: 1.5rem;
+    column-count: 1;
+}
+
+@media (min-width: 600px) {
+    .news-feed {
+        column-count: 2;
+    }
+}
+
+@media (min-width: 1024px) {
+    .news-feed {
+        column-count: 3;
+    }
+}
+
+/* Styles for react-masonry-css */
+.masonry-grid {
+  display: flex;
+  margin-left: -1.5rem; /* gutter size offset */
+  width: auto;
+}
+
+.masonry-grid-column {
+  padding-left: 1.5rem; /* gutter size */
+  background-clip: padding-box;
+}
+
+.feed-item-wrap {
+    margin-bottom: 1.5rem;
+    animation: fadeIn 0.5s ease-in-out both;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .no-articles-message {
@@ -53,4 +95,60 @@
 .load-more-button:hover {
     background-color: #30363d;
     border-color: #8B949E;
+}
+
+.topic-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    padding: 1rem;
+    background: linear-gradient(to bottom, rgba(58, 58, 60, 0.7), rgba(44, 44, 46, 0.6));
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+}
+
+.topic-search input {
+    width: 300px;
+    padding: 0.75rem;
+    background-color: #2c2c2e;
+    border: 1px solid #3a3a3c;
+    border-radius: 8px;
+    color: #f0f0f0;
+    font-size: 1rem;
+}
+
+.topic-search input::placeholder {
+    color: #a0a0a5;
+}
+
+.topic-sort {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.topic-sort span {
+    color: #a0a0a5;
+    font-weight: 500;
+    margin-right: 0.5rem;
+}
+
+.topic-sort button {
+    background-color: transparent;
+    border: 1px solid #3a3a3c;
+    color: #a0a0a5;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    border-radius: 6px;
+    font-weight: 500;
+    transition: all 0.2s ease-in-out;
+}
+
+.topic-sort button.active {
+    background-color: #007aff;
+    color: #ffffff;
+    border-color: #007aff;
 } 

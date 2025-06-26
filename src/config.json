@@ -12,14 +12,12 @@
         {"name": "Get AI Insights For Your Organization From Forrester", "url": "https://www.forrester.com/blogs/category/artificial-intelligence-ai/feed", "lang": "en", "quality": 3},
         {"name": "AI – AI-TechPark", "url": "https://ai-techpark.com/category/ai/feed/", "lang": "en", "quality": 2},
         {"name": "Announcements - Stability AI", "url": "https://stability.ai/blog?format=rss", "lang": "en", "quality": 2},
-        {"name": "Artificial Intelligence | TechRepublic", "url": "https://www.techrepublic.com/rssfeeds/topic/artificial-intelligence/", "lang": "en", "quality": 2},
         {"name": "Department of Product", "url": "https://departmentofproduct.substack.com/feed", "lang": "en", "quality": 2},
         {"name": "Latest stories for ZDNET in Artificial-Intelligence", "url": "https://www.zdnet.com/topic/artificial-intelligence/rss.xml", "lang": "en", "quality": 2},
         {"name": "Machine Learning & Big Data Blog – BMC Software | Blogs", "url": "https://www.bmc.com/blogs/categories/machine-learning-big-data/feed", "lang": "en", "quality": 2},
         {"name": "Product Hunt — The best new products, every day", "url": "https://www.producthunt.com/feed", "lang": "en", "quality": 2},
         {"name": "Tech Monitor", "url": "https://techmonitor.ai/feed", "lang": "en", "quality": 2},
         {"name": "The Register - Software: AI + ML", "url": "https://www.theregister.com/software/ai_ml/headlines.atom", "lang": "en", "quality": 2},
-        {"name": "AI Trends", "url": "https://www.aitrends.com/feed/", "lang": "en", "quality": 2},
         {"name": "AIMultiple", "url": "https://research.aimultiple.com/feed/", "lang": "en", "quality": 2}
     ],
     "General News & Impact": [
@@ -32,7 +30,6 @@
         {"name": "THE DECODER", "url": "https://the-decoder.com/feed/", "lang": "en", "quality": 3},
         {"name": "The Rundown AI", "url": "https://rss.beehiiv.com/feeds/2R3C6Bt5wj.xml", "lang": "en", "quality": 3},
         {"name": "Last Week in AI", "url": "https://lastweekin.ai/feed", "lang": "en", "quality": 3},
-        {"name": "AI News", "url": "https://www.artificialintelligence-news.com/feed/rss/", "lang": "en", "quality": 2},
         {"name": "AI Blog", "url": "https://www.artificial-intelligence.blog/ai-news?format=rss", "lang": "en", "quality": 2},
         {"name": "Daily AI", "url": "https://dailyai.com/feed/", "lang": "en", "quality": 2}
     ],
@@ -73,11 +70,9 @@
         {"name": "Chain of Thought", "url": "https://every.to/chain-of-thought/feed.xml", "lang": "en", "quality": 2},
         {"name": "DebuggerCafe", "url": "https://debuggercafe.com/feed/", "lang": "en", "quality": 2},
         {"name": "InfoWorld Machine Learning", "url": "https://www.infoworld.com/category/machine-learning/index.rss", "lang": "en", "quality": 2},
-        {"name": "MIT News - Machine learning", "url": "https://news.mit.edu/topic/mitmachine-learning-rss.xml", "lang": "en", "quality": 2},
         {"name": "Neural Interfaces News -- ScienceDaily", "url": "https://www.sciencedaily.com/rss/computers_math/neural_interfaces.xml", "lang": "en", "quality": 2},
         {"name": "News, Tutorials, AI Research", "url": "https://www.assemblyai.com/blog/rss/", "lang": "en", "quality": 2},
         {"name": "Paperspace Blog", "url": "https://blog.paperspace.com/rss/", "lang": "en", "quality": 2},
-        {"name": "Playing with AI", "url": "https://erichartford.com/rss.xml", "lang": "en", "quality": 2},
         {"name": "Robotics Research News -- ScienceDaily", "url": "https://www.sciencedaily.com/rss/computers_math/robotics.xml", "lang": "en", "quality": 2},
         {"name": "Weights & Biases: Fully Connected", "url": "https://wandb.ai/fully-connected/rss.xml", "lang": "en", "quality": 2}
     ]

@@ -11,33 +11,32 @@ const NewsCard = ({ article }) => {
     const now = new Date();
     const seconds = Math.floor((now - date) / 1000);
 
-    let interval = seconds / 31536000;
-    if (interval > 1) {
-        const years = Math.floor(interval);
-        return years + (years === 1 ? " year ago" : " years ago");
+    const rtf = new Intl.RelativeTimeFormat('fr-FR', { numeric: 'auto' });
+
+    let interval = Math.floor(seconds / 31536000);
+    if (interval >= 1) {
+      return rtf.format(-interval, 'year');
     }
-    interval = seconds / 2592000;
-    if (interval > 1) {
-        const months = Math.floor(interval);
-        return months + (months === 1 ? " month ago" : " months ago");
+    interval = Math.floor(seconds / 2592000);
+    if (interval >= 1) {
+      return rtf.format(-interval, 'month');
     }
-    interval = seconds / 86400;
-    if (interval > 1) {
-        const days = Math.floor(interval);
-        return days + (days === 1 ? " day ago" : " days ago");
+    interval = Math.floor(seconds / 86400);
+    if (interval >= 1) {
+      return rtf.format(-interval, 'day');
     }
-    interval = seconds / 3600;
-    if (interval > 1) {
-        const hours = Math.floor(interval);
-        return hours + (hours === 1 ? " hour ago" : " hours ago");
+    interval = Math.floor(seconds / 3600);
+    if (interval >= 1) {
+      return rtf.format(-interval, 'hour');
     }
-    interval = seconds / 60;
-    if (interval > 1) {
-        const minutes = Math.floor(interval);
-        return minutes + (minutes === 1 ? " minute ago" : " minutes ago");
+    interval = Math.floor(seconds / 60);
+    if (interval >= 1) {
+      return rtf.format(-interval, 'minute');
     }
-    return "just now";
+    return rtf.format(0, 'second');
   };
+
+  const readingTimeText = `${article.reading_time} min de lecture`;
 
   return (
     <a href={article.url} target="_blank" rel="noopener noreferrer" className="news-card-link">
@@ -54,7 +53,7 @@ const NewsCard = ({ article }) => {
                 <div className="news-meta">
                   {article.date && <span className="news-date">{timeAgo(article.date)}</span>}
                   {article.date && article.reading_time && <span className="news-dot">·</span>}
-                  {article.reading_time && <span className="news-reading-time">{article.reading_time} min read</span>}
+                  {article.reading_time && <span className="news-reading-time">{readingTimeText}</span>}
                 </div>
             </div>
         </div>

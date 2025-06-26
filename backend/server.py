@@ -10,8 +10,8 @@ CORS(app)
 @app.route('/refresh-data', methods=['GET'])
 def refresh_data():
     def generate():
-        python_executable = sys.executable
         script_dir = os.path.dirname(os.path.abspath(__file__))
+        python_executable = os.path.join(script_dir, 'venv/bin/python')
         scraper_path = os.path.join(script_dir, 'scraper.py')
         
         process = subprocess.Popen(
@@ -30,6 +30,8 @@ def refresh_data():
 
         if return_code != 0:
             error_output = process.stderr.read()
+            print("--- SCRAPER ERROR ---", file=sys.stderr)
+            print(error_output, file=sys.stderr)
             yield f"data: ERROR: {error_output}\n\n"
 
         yield "data: DONE\n\n"
