@@ -1,1 +1,1 @@
-web: python3 minimal_server.py 
+web: python3 simple_http.py 
