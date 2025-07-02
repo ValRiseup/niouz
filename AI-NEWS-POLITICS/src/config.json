@@ -12,7 +12,9 @@
         {"name": "Les Échos Politique", "url": "https://www.lesechos.fr/politique-societe/rss", "lang": "fr", "quality": 4},
         {"name": "La Croix Politique", "url": "https://www.la-croix.com/France/Politique/RSS", "lang": "fr", "quality": 3},
         {"name": "Challenges Politique", "url": "https://www.challenges.fr/politique/rss", "lang": "fr", "quality": 3},
-        {"name": "Capital Politique", "url": "https://www.capital.fr/politique/rss", "lang": "fr", "quality": 3}
+        {"name": "Capital Politique", "url": "https://www.capital.fr/politique/rss", "lang": "fr", "quality": 3},
+        {"name": "Le Parisien Politique", "url": "https://www.leparisien.fr/politique/rss.xml", "lang": "fr", "quality": 4},
+        {"name": "20 Minutes Politique", "url": "https://www.20minutes.fr/rss/politique.xml", "lang": "fr", "quality": 3}
     ],
     "Médias Audiovisuels Français": [
         {"name": "France Inter Politique", "url": "https://www.franceinter.fr/politique/rss", "lang": "fr", "quality": 5},
@@ -23,7 +25,8 @@
         {"name": "BFM Politique", "url": "https://www.bfmtv.com/rss/politique/", "lang": "fr", "quality": 3},
         {"name": "LCI Politique", "url": "https://www.lci.fr/politique/rss", "lang": "fr", "quality": 3},
         {"name": "CNews Politique", "url": "https://www.cnews.fr/politique/rss", "lang": "fr", "quality": 3},
-        {"name": "RMC Info Politique", "url": "https://rmc.bfmtv.com/politique/rss/", "lang": "fr", "quality": 3}
+        {"name": "RMC Info Politique", "url": "https://rmc.bfmtv.com/politique/rss/", "lang": "fr", "quality": 3},
+        {"name": "France Culture Politique", "url": "https://www.radiofrance.fr/franceculture/politique/rss", "lang": "fr", "quality": 3}
     ],
     "Institutions Françaises": [
         {"name": "Assemblée Nationale", "url": "https://www.assemblee-nationale.fr/rss/rss.xml", "lang": "fr", "quality": 5},
@@ -52,6 +55,12 @@
         {"name": "Contrepoints", "url": "https://www.contrepoints.org/feed", "lang": "fr", "quality": 3},
         {"name": "Regards", "url": "https://www.regards.fr/rss.xml", "lang": "fr", "quality": 3},
         {"name": "Politis", "url": "https://www.politis.fr/rss/", "lang": "fr", "quality": 3}
+    ],
+    "Société & Social France": [
+        {"name": "Le Parisien Société", "url": "https://www.leparisien.fr/societe/rss.xml", "lang": "fr", "quality": 4},
+        {"name": "20 Minutes Société", "url": "https://www.20minutes.fr/rss/societe.xml", "lang": "fr", "quality": 3},
+        {"name": "France Info Société", "url": "https://www.francetvinfo.fr/societe.rss", "lang": "fr", "quality": 3},
+        {"name": "France 24 Société", "url": "https://www.france24.com/fr/societe/rss", "lang": "fr", "quality": 3}
     ],
     "Sondages & Data France": [
         {"name": "IFOP", "url": "https://www.ifop.com/feed/", "lang": "fr", "quality": 4},
