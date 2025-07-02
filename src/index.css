@@ -46,6 +46,7 @@ body {
     color: #e2e8f0;
     line-height: 1.6;
     min-height: 100vh;
+    min-height: 100dvh;
     position: relative;
     overflow-x: hidden;
 }
@@ -88,6 +89,7 @@ h1, h2, h3, h4, h5, h6 {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+    min-height: 100dvh;
 }
 
 .app {
@@ -140,6 +142,7 @@ a:hover {
 
 .App {
     min-height: 100vh;
+    min-height: 100dvh;
     display: flex;
     flex-direction: column;
     position: relative;
@@ -150,6 +153,7 @@ a:hover {
   position: relative;
   z-index: 1;
   min-height: 100vh;
+  min-height: 100dvh;
   padding-top: 6rem;
 }
 

@@ -128,7 +128,7 @@ function App() {
         display: 'flex', 
         justifyContent: 'center', 
         alignItems: 'center', 
-        height: '100vh',
+        height: '100dvh',
         fontSize: '1.1em',
         color: '#6b7280'
       }}>
