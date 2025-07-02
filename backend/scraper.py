@@ -253,19 +253,32 @@ def generate_topics_with_gemini(articles):
     print(f"🧠 [GEMINI] Sources distribution: {dict(list(sources_count.items())[:5])}", flush=True)
     print(f"🧠 [GEMINI] Languages: {languages_count}", flush=True)
 
-    prompt = f"""You are an expert AI news analyst. Your task is to analyze articles and intelligently group them into coherent topics.
+    prompt = f"""You are an expert AI news analyst. Analyze the following articles and group them into coherent topics for the 'sujets' view of our application.
+
+GOAL:
+- Provide concise topic titles (max 8 words).
+- Summarize each topic in 2‑3 factual sentences.
+- Assign a category from the list below to every topic.
+
+TOPIC CATEGORIES:
+- Corporate: company announcements, funding news, product launches or mergers.
+- Technology: developer tools, open source projects or technical implementations.
+- Research: academic papers, scientific results or novel algorithms.
+- Policy: regulation, legislation or legal issues surrounding AI.
+- Ethics: AI safety, bias or societal impact discussions.
+- Community: conferences, events or culture within the AI community.
 
 ANALYSIS RULES:
-- Group articles that discuss the same event, product, company announcement, or research breakthrough
-- Look for common entities (companies, products, people, technologies) and themes
-- Minimum 2 articles per topic, maximum 8 articles per topic
-- Prioritize high-impact stories that involve multiple sources covering the same event
-- Create 3-10 total topics depending on content diversity
+- Group articles that discuss the same event, product, company announcement or research breakthrough.
+- Look for common entities (companies, products, people, technologies) and themes.
+- Minimum 2 articles per topic, maximum 8.
+- Prioritize high‑impact stories covered by multiple sources.
+- Create 3‑10 total topics depending on content diversity.
 
 GROUPING CRITERIA:
 1. Same company announcements (e.g., OpenAI releases, Google AI updates)
-2. Same product/technology (e.g., GPT-4, Claude, specific AI tools)
-3. Same regulatory/policy developments (e.g., EU AI Act, AI safety regulations)
+2. Same product/technology (e.g., GPT‑4, Claude, specific AI tools)
+3. Same regulatory or policy developments (e.g., EU AI Act, AI safety regulations)
 4. Same research breakthroughs or scientific papers
 5. Same industry events or conferences
 6. Same controversy or debate topic
@@ -279,7 +292,7 @@ OUTPUT FORMAT - Return only this JSON structure:
       "description": "One compelling sentence describing the topic",
       "article_urls": ["url1", "url2", ...],
       "keywords": ["keyword1", "keyword2", "keyword3"],
-      "category": "One of: Corporate, Technology, Research, Ethics, Community"
+      "category": "One of: Corporate, Technology, Research, Policy, Ethics, Community"
     }}
   ]
 }}
