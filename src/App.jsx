@@ -4,6 +4,7 @@ import Header from './components/Header';
 import NewsFeed from './components/NewsFeed';
 import Footer from './components/Footer';
 import ScrollToTopButton from './components/ScrollToTopButton';
+import ViewModeFab from './components/ViewModeFab';
 import SourceSelector from './components/SourceSelector';
 import { useNewsData } from './hooks/useNewsData';
 import configUrl from './config.json?url';
@@ -14,13 +15,24 @@ function App() {
   const [viewMode, setViewMode] = useState('articles'); // 'articles' or 'topics'
   const [showSourceSelector, setShowSourceSelector] = useState(false);
   const [refreshTrigger, setRefreshTrigger] = useState(0);
+  const [globalSearchTerm, setGlobalSearchTerm] = useState('');
+  const [autoRefreshing, setAutoRefreshing] = useState(false);
   
   // Fetch news data from API
   const { newsData, loading: newsDataLoading, error: newsDataError, refetch } = useNewsData(refreshTrigger);
 
   useEffect(() => {
     const handleScroll = () => {
-        document.body.style.backgroundPositionY = `${window.scrollY * 0.5}px`;
+        const yOffset = Math.min(window.scrollY * 0.2, 300);
+        document.body.style.backgroundPositionY = `${yOffset}px`;
+
+        // Auto refresh when scrolled to very top
+        if (window.scrollY === 0 && !autoRefreshing) {
+          setAutoRefreshing(true);
+          refetch();
+          // allow refresh again after 5 seconds
+          setTimeout(() => setAutoRefreshing(false), 5000);
+        }
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
@@ -105,6 +117,11 @@ function App() {
     setSelectedSources(newSelectedSources);
   };
   
+  // Reset global search when switching view modes
+  useEffect(() => {
+    setGlobalSearchTerm('');
+  }, [viewMode]);
+
   if (!sourceCategories || newsDataLoading) {
     return (
       <div className="loading-container" style={{ 
@@ -132,28 +149,36 @@ function App() {
         onViewModeChange={setViewMode}
         activeLanguage={activeLanguage}
         onLanguageChange={setActiveLanguage}
+        onFilterSourcesClick={() => setShowSourceSelector(s => !s)}
+        onRefreshData={refetch}
+        globalSearchTerm={globalSearchTerm}
+        setGlobalSearchTerm={setGlobalSearchTerm}
       />
-      <main className="main-container">
-        {showSourceSelector && (
-          <SourceSelector
-            groupedSources={orderedGroupedSources}
+      <div className="content-wrapper">
+        <main className="main-container">
+          {showSourceSelector && (
+            <SourceSelector
+              groupedSources={orderedGroupedSources}
+              selectedSources={selectedSources}
+              setSelectedSources={setSelectedSources}
+              onSoloSelect={handleSoloSelect}
+              onClose={() => setShowSourceSelector(false)}
+            />
+          )}
+          <NewsFeed
+            newsData={newsData}
             selectedSources={selectedSources}
-            setSelectedSources={setSelectedSources}
-            onSoloSelect={handleSoloSelect}
-            onClose={() => setShowSourceSelector(false)}
+            activeLanguage={activeLanguage}
+            viewMode={viewMode}
+            onFilterSourcesClick={() => setShowSourceSelector(s => !s)}
+            onRefreshData={refetch}
+            globalSearchTerm={globalSearchTerm}
           />
-        )}
-        <NewsFeed
-          newsData={newsData}
-          selectedSources={selectedSources}
-          activeLanguage={activeLanguage}
-          viewMode={viewMode}
-          onFilterSourcesClick={() => setShowSourceSelector(s => !s)}
-          onRefreshData={refetch}
-        />
-      </main>
-      <Footer />
-      <ScrollToTopButton />
+        </main>
+        <Footer />
+        <ScrollToTopButton />
+        <ViewModeFab viewMode={viewMode} onViewModeChange={setViewMode} />
+      </div>
     </div>
   )
 }

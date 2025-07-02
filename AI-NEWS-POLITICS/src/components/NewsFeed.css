@@ -1,0 +1,125 @@
+.news-feed {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+.news-feed.loading,
+.news-feed.empty {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 50vh;
+}
+
+.loading-message,
+.empty-message {
+  text-align: center;
+  padding: 2rem;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 1rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.loading-icon,
+.empty-icon {
+  font-size: 3rem;
+  display: block;
+  margin-bottom: 1rem;
+}
+
+.loading-icon {
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.loading-message p,
+.empty-message h3,
+.empty-message p {
+  margin: 0.5rem 0;
+  color: #374151;
+}
+
+.feed-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid #e5e7eb;
+}
+
+.feed-title {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #1f2937;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.feed-count {
+  background: linear-gradient(135deg, #3b82f6, #1e40af);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.feed-grid {
+  display: grid;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.articles-grid {
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+}
+
+.topics-grid {
+  grid-template-columns: 1fr;
+}
+
+.feed-footer {
+  text-align: center;
+  padding: 1.5rem;
+  background: rgba(59, 130, 246, 0.05);
+  border-radius: 0.5rem;
+  border: 1px solid rgba(59, 130, 246, 0.1);
+}
+
+.feed-summary {
+  margin: 0;
+  color: #4b5563;
+  font-style: italic;
+}
+
+@media (max-width: 768px) {
+  .news-feed {
+    padding: 1rem 0.5rem;
+  }
+
+  .feed-header {
+    flex-direction: column;
+    gap: 1rem;
+    text-align: center;
+  }
+
+  .feed-title {
+    font-size: 1.5rem;
+  }
+
+  .articles-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .feed-grid {
+    gap: 1rem;
+  }
+} 

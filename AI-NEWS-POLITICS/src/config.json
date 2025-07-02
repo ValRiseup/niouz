@@ -1,0 +1,87 @@
+{
+    "Médias Français Nationaux": [
+        {"name": "Le Monde Politique", "url": "https://www.lemonde.fr/politique/rss_full.xml", "lang": "fr", "quality": 5},
+        {"name": "Le Figaro Politique", "url": "https://www.lefigaro.fr/politique/rss", "lang": "fr", "quality": 5},
+        {"name": "Mediapart", "url": "https://www.mediapart.fr/articles/feed", "lang": "fr", "quality": 5},
+        {"name": "Libération Politique", "url": "https://www.liberation.fr/arc/outboundfeeds/rss/politique/", "lang": "fr", "quality": 4},
+        {"name": "L'Express Politique", "url": "https://www.lexpress.fr/politique/rss", "lang": "fr", "quality": 4},
+        {"name": "Le Point Politique", "url": "https://www.lepoint.fr/politique/rss.xml", "lang": "fr", "quality": 4},
+        {"name": "L'Obs Politique", "url": "https://www.nouvelobs.com/politique/rss.xml", "lang": "fr", "quality": 4},
+        {"name": "Marianne", "url": "https://www.marianne.net/politique/rss", "lang": "fr", "quality": 4},
+        {"name": "L'Opinion", "url": "https://www.lopinion.fr/politique/feed", "lang": "fr", "quality": 4},
+        {"name": "Les Échos Politique", "url": "https://www.lesechos.fr/politique-societe/rss", "lang": "fr", "quality": 4},
+        {"name": "La Croix Politique", "url": "https://www.la-croix.com/France/Politique/RSS", "lang": "fr", "quality": 3},
+        {"name": "Challenges Politique", "url": "https://www.challenges.fr/politique/rss", "lang": "fr", "quality": 3},
+        {"name": "Capital Politique", "url": "https://www.capital.fr/politique/rss", "lang": "fr", "quality": 3}
+    ],
+    "Médias Audiovisuels Français": [
+        {"name": "France Inter Politique", "url": "https://www.franceinter.fr/politique/rss", "lang": "fr", "quality": 5},
+        {"name": "Public Sénat", "url": "https://www.publicsenat.fr/rss", "lang": "fr", "quality": 5},
+        {"name": "LCP Assemblée", "url": "https://lcp.fr/rss", "lang": "fr", "quality": 5},
+        {"name": "France 24 Politique", "url": "https://www.france24.com/fr/politique/rss", "lang": "fr", "quality": 4},
+        {"name": "France Info Politique", "url": "https://www.francetvinfo.fr/politique.rss", "lang": "fr", "quality": 4},
+        {"name": "BFM Politique", "url": "https://www.bfmtv.com/rss/politique/", "lang": "fr", "quality": 3},
+        {"name": "LCI Politique", "url": "https://www.lci.fr/politique/rss", "lang": "fr", "quality": 3},
+        {"name": "CNews Politique", "url": "https://www.cnews.fr/politique/rss", "lang": "fr", "quality": 3},
+        {"name": "RMC Info Politique", "url": "https://rmc.bfmtv.com/politique/rss/", "lang": "fr", "quality": 3}
+    ],
+    "Institutions Françaises": [
+        {"name": "Assemblée Nationale", "url": "https://www.assemblee-nationale.fr/rss/rss.xml", "lang": "fr", "quality": 5},
+        {"name": "Sénat", "url": "https://www.senat.fr/rss/actualites.xml", "lang": "fr", "quality": 5},
+        {"name": "Vie Publique", "url": "https://www.vie-publique.fr/rss", "lang": "fr", "quality": 5},
+        {"name": "Service Public", "url": "https://www.service-public.fr/rss/actualites.xml", "lang": "fr", "quality": 4},
+        {"name": "Conseil Constitutionnel", "url": "https://www.conseil-constitutionnel.fr/rss", "lang": "fr", "quality": 4},
+        {"name": "Cour des Comptes", "url": "https://www.ccomptes.fr/fr/rss.xml", "lang": "fr", "quality": 4},
+        {"name": "Élysée", "url": "https://www.elysee.fr/rss.xml", "lang": "fr", "quality": 4}
+    ],
+    "Presse Régionale Française": [
+        {"name": "Ouest France Politique", "url": "https://www.ouest-france.fr/politique/rss.xml", "lang": "fr", "quality": 4},
+        {"name": "Sud Ouest Politique", "url": "https://www.sudouest.fr/politique/rss.xml", "lang": "fr", "quality": 3},
+        {"name": "La Dépêche Politique", "url": "https://www.ladepeche.fr/politique/rss.xml", "lang": "fr", "quality": 3},
+        {"name": "Nice Matin Politique", "url": "https://www.nicematin.com/politique/rss", "lang": "fr", "quality": 3},
+        {"name": "Le Progrès Politique", "url": "https://www.leprogres.fr/politique/rss", "lang": "fr", "quality": 3},
+        {"name": "Est Républicain", "url": "https://www.estrepublicain.fr/politique/rss", "lang": "fr", "quality": 3},
+        {"name": "La Voix du Nord", "url": "https://www.lavoixdunord.fr/politique/rss", "lang": "fr", "quality": 3}
+    ],
+    "Analyses & Opinion France": [
+        {"name": "Atlantico", "url": "https://www.atlantico.fr/rss.xml", "lang": "fr", "quality": 4},
+        {"name": "Slate France", "url": "http://www.slate.fr/rss.xml", "lang": "fr", "quality": 4},
+        {"name": "L'Humanité", "url": "https://www.humanite.fr/politique/rss", "lang": "fr", "quality": 3},
+        {"name": "Valeurs Actuelles", "url": "https://www.valeursactuelles.com/politique/feed", "lang": "fr", "quality": 3},
+        {"name": "Causeur", "url": "https://www.causeur.fr/feed", "lang": "fr", "quality": 3},
+        {"name": "Contrepoints", "url": "https://www.contrepoints.org/feed", "lang": "fr", "quality": 3},
+        {"name": "Regards", "url": "https://www.regards.fr/rss.xml", "lang": "fr", "quality": 3},
+        {"name": "Politis", "url": "https://www.politis.fr/rss/", "lang": "fr", "quality": 3}
+    ],
+    "Sondages & Data France": [
+        {"name": "IFOP", "url": "https://www.ifop.com/feed/", "lang": "fr", "quality": 4},
+        {"name": "Ipsos France", "url": "https://www.ipsos.com/fr-fr/rss.xml", "lang": "fr", "quality": 4},
+        {"name": "OpinionWay", "url": "https://www.opinion-way.com/fr/sondages/rss", "lang": "fr", "quality": 3},
+        {"name": "BVA Opinion", "url": "https://www.bva-group.com/rss/", "lang": "fr", "quality": 3},
+        {"name": "CSA Research", "url": "https://www.csa.eu/rss", "lang": "fr", "quality": 3},
+        {"name": "Harris Interactive France", "url": "https://harris-interactive.fr/rss/", "lang": "fr", "quality": 3}
+    ],
+    "Fact-Checking France": [
+        {"name": "Les Décodeurs Le Monde", "url": "https://www.lemonde.fr/les-decodeurs/rss_full.xml", "lang": "fr", "quality": 5},
+        {"name": "CheckNews Libération", "url": "https://www.liberation.fr/checknews/rss/", "lang": "fr", "quality": 4},
+        {"name": "AFP Factuel", "url": "https://factuel.afp.com/rss", "lang": "fr", "quality": 4},
+        {"name": "France Info Vrai ou Faux", "url": "https://www.francetvinfo.fr/vrai-ou-fake.rss", "lang": "fr", "quality": 4}
+    ],
+    "Europe & Francophonie": [
+        {"name": "Euronews Politique", "url": "https://fr.euronews.com/rss?format=mrss", "lang": "fr", "quality": 4},
+        {"name": "RFI Politique", "url": "https://www.rfi.fr/fr/politique/rss", "lang": "fr", "quality": 4},
+        {"name": "TV5 Monde Info", "url": "https://information.tv5monde.com/info/rss", "lang": "fr", "quality": 3},
+        {"name": "France Diplomatie", "url": "https://www.diplomatie.gouv.fr/spip.php?page=backend-fd", "lang": "fr", "quality": 3},
+        {"name": "Politico Europe", "url": "https://www.politico.eu/rss/politics/", "lang": "en", "quality": 4}
+    ],
+    "Médias Internationaux": [
+        {"name": "BBC Politics", "url": "http://feeds.bbci.co.uk/news/politics/rss.xml", "lang": "en", "quality": 5},
+        {"name": "Reuters Politics", "url": "https://feeds.reuters.com/reuters/politicsNews", "lang": "en", "quality": 5},
+        {"name": "The Guardian Politics", "url": "https://www.theguardian.com/politics/rss", "lang": "en", "quality": 4},
+        {"name": "Financial Times Politics", "url": "https://www.ft.com/politics?format=rss", "lang": "en", "quality": 4},
+        {"name": "CNN Politics", "url": "http://rss.cnn.com/rss/edition.rss", "lang": "en", "quality": 4},
+        {"name": "Washington Post Politics", "url": "http://feeds.washingtonpost.com/rss/politics", "lang": "en", "quality": 4},
+        {"name": "New York Times Politics", "url": "https://rss.nytimes.com/services/xml/rss/nyt/Politics.xml", "lang": "en", "quality": 4},
+        {"name": "Politico", "url": "https://www.politico.com/rss/politicopicks.xml", "lang": "en", "quality": 4}
+    ]
+} 

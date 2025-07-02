@@ -1,13 +1,10 @@
 import React, { useState, useRef, useEffect } from 'react';
-import ProgressDisplay from './ProgressDisplay';
 import RefreshIcon from '../assets/icons/refresh.svg?react';
 import DotsIcon from '../assets/icons/dots.svg?react';
 import './RefreshButton.css';
 
 const RefreshButton = ({ onRefreshData }) => {
   const [isRefreshing, setIsRefreshing] = useState(false);
-  const [progress, setProgress] = useState(0);
-  const [sourceName, setSourceName] = useState('');
   const [showDropdown, setShowDropdown] = useState(false);
   const dropdownRef = useRef(null);
 
@@ -26,17 +23,10 @@ const RefreshButton = ({ onRefreshData }) => {
   }, []);
 
   const handleRefresh = (mode = 'normal') => {
-    setIsRefreshing(true);
-    setProgress(0);
-    setShowDropdown(false);
+    if (isRefreshing) return;
     
-    // Set initial message based on mode
-    const modeMessages = {
-      normal: 'Actualisation des nouveaux articles...',
-      all: 'Récupération de TOUS les articles...',
-      reset: 'Réinitialisation et actualisation...'
-    };
-    setSourceName(modeMessages[mode] || 'Initializing...');
+    setIsRefreshing(true);
+    setShowDropdown(false);
     
     // Build URL with appropriate parameters
     const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5001';
@@ -51,45 +41,31 @@ const RefreshButton = ({ onRefreshData }) => {
 
     eventSource.onmessage = (event) => {
       const data = event.data;
-      if (data.startsWith('PROGRESS:')) {
-        const [, progressValue, name] = data.split(':');
-        setProgress(parseFloat(progressValue));
-        setSourceName(name);
-      } else if (data === 'DONE') {
-        setProgress(100);
-        setSourceName('Feed refreshed successfully!');
+      if (data === 'DONE') {
+        // Refresh completed successfully
         setTimeout(() => {
           if (onRefreshData) {
             onRefreshData();
           }
           setIsRefreshing(false);
-          setSourceName('');
-          setProgress(0);
-        }, 1500);
+        }, 500);
         eventSource.close();
-      } else if (data.startsWith('ERROR:FATAL: GEMINI_API_KEY')) {
-        setSourceName(data.substring(12));
-        eventSource.close();
-        setTimeout(() => setIsRefreshing(false), 10000);
       } else if (data.startsWith('ERROR:')) {
-        setSourceName(`Error: ${data.substring(6)}`);
+        // Handle errors
+        console.error('Refresh error:', data.substring(6));
         eventSource.close();
         setTimeout(() => {
           setIsRefreshing(false);
-          setSourceName('');
-          setProgress(0);
-        }, 3000);
+        }, 1000);
       }
     };
 
     eventSource.onerror = () => {
-      setSourceName('Error connecting to the server.');
+      console.error('Error connecting to refresh service');
       eventSource.close();
       setTimeout(() => {
         setIsRefreshing(false);
-        setSourceName('');
-        setProgress(0);
-      }, 3000);
+      }, 1000);
     };
   };
 
@@ -101,75 +77,66 @@ const RefreshButton = ({ onRefreshData }) => {
 
   return (
     <div className="refresh-container">
-      <div className="refresh-button-group">
+      <button 
+        className={`feed-action-button icon-only ${isRefreshing ? 'refreshing' : ''}`}
+        onClick={handleNormalRefresh} 
+        disabled={isRefreshing}
+        aria-label="Actualiser le fil d'actualités"
+        title={isRefreshing ? "Actualisation en cours..." : "Actualiser les articles"}
+      >
+        <RefreshIcon />
+      </button>
+      
+      <div className="refresh-dropdown" ref={dropdownRef}>
         <button 
-          className={`feed-action-button icon-only refresh-main ${isRefreshing ? 'refreshing' : ''}`}
-          onClick={handleNormalRefresh} 
+          className={`feed-action-button icon-only dropdown-toggle ${showDropdown ? 'active' : ''}`}
+          onClick={toggleDropdown} 
           disabled={isRefreshing}
-          aria-label="Actualiser le fil d'actualités"
+          aria-label="Options d'actualisation"
         >
-          <RefreshIcon />
+          <DotsIcon />
         </button>
         
-        <div className="refresh-dropdown" ref={dropdownRef}>
-          <button 
-            className={`feed-action-button icon-only refresh-menu ${showDropdown ? 'active' : ''}`}
-            onClick={toggleDropdown} 
-            disabled={isRefreshing}
-            aria-label="Options d'actualisation"
-          >
-            <DotsIcon />
-          </button>
-          
-          {showDropdown && (
-            <div className="dropdown-menu">
-              <button 
-                className="dropdown-item" 
-                onClick={handleNormalRefresh}
-                disabled={isRefreshing}
-              >
-                <div>
-                  <RefreshIcon />
-                  <div>
-                    <span>Nouveaux articles</span>
-                    <small>Articles récents uniquement</small>
-                  </div>
-                </div>
-              </button>
-              
-              <button 
-                className="dropdown-item" 
-                onClick={handleFullRefresh}
-                disabled={isRefreshing}
-              >
-                <div>
-                  <RefreshIcon />
-                  <div>
-                    <span>Tous les articles</span>
-                    <small>Récupération complète</small>
-                  </div>
-                </div>
-              </button>
-              
-              <button 
-                className="dropdown-item reset" 
-                onClick={handleResetRefresh}
-                disabled={isRefreshing}
-              >
-                <div>
-                  <RefreshIcon />
-                  <div>
-                    <span>Réinitialiser</span>
-                    <small>Reset timestamp + actualisation</small>
-                  </div>
-                </div>
-              </button>
-            </div>
-          )}
-        </div>
+        {showDropdown && (
+          <div className="dropdown-menu">
+            <button 
+              className="dropdown-item" 
+              onClick={handleNormalRefresh}
+              disabled={isRefreshing}
+            >
+              <RefreshIcon />
+              <div>
+                <span>Nouveaux articles</span>
+                <small>Articles récents uniquement</small>
+              </div>
+            </button>
+            
+            <button 
+              className="dropdown-item" 
+              onClick={handleFullRefresh}
+              disabled={isRefreshing}
+            >
+              <RefreshIcon />
+              <div>
+                <span>Tous les articles</span>
+                <small>Récupération complète</small>
+              </div>
+            </button>
+            
+            <button 
+              className="dropdown-item reset" 
+              onClick={handleResetRefresh}
+              disabled={isRefreshing}
+            >
+              <RefreshIcon />
+              <div>
+                <span>Réinitialiser</span>
+                <small>Reset timestamp + actualisation</small>
+              </div>
+            </button>
+          </div>
+        )}
       </div>
-      
-      {isRefreshing && <ProgressDisplay progress={progress} sourceName={sourceName} />}
     </div>
   );
 };

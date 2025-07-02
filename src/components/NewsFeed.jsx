@@ -5,11 +5,10 @@ import TopicCard from './TopicCard';
 import SkeletonCard from './SkeletonCard';
 import RefreshButton from './RefreshButton';
 import './NewsFeed.css';
-import FilterIcon from '../assets/icons/filter.svg?react';
 
 const ITEMS_PER_PAGE = 6;
 
-const NewsFeed = ({ newsData, selectedSources, activeLanguage, viewMode, onFilterSourcesClick, onRefreshData }) => {
+const NewsFeed = ({ newsData, selectedSources, activeLanguage, viewMode, onFilterSourcesClick, onRefreshData, globalSearchTerm }) => {
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(1);
@@ -25,21 +24,47 @@ const NewsFeed = ({ newsData, selectedSources, activeLanguage, viewMode, onFilte
     return new Date(b.date) - new Date(a.date);
   }), [newsData.articles]);
 
-  const filteredArticles = useMemo(() => sortedArticles.filter(article => {
-    const sourceMatch = selectedSources[article.source];
-    const languageMatch = activeLanguage === 'all' || article.language === activeLanguage;
-    return sourceMatch && languageMatch;
-  }), [sortedArticles, selectedSources, activeLanguage]);
+  const filteredArticles = useMemo(() => {
+    let articles = sortedArticles.filter(article => {
+      const sourceMatch = selectedSources[article.source];
+      const languageMatch = activeLanguage === 'all' || article.language === activeLanguage;
+      return sourceMatch && languageMatch;
+    });
+
+    // Apply global search to articles
+    if (globalSearchTerm) {
+      articles = articles.filter(article => 
+        article.title.toLowerCase().includes(globalSearchTerm.toLowerCase()) ||
+        (article.summary && article.summary.toLowerCase().includes(globalSearchTerm.toLowerCase())) ||
+        article.source.toLowerCase().includes(globalSearchTerm.toLowerCase()) ||
+        (article.category && article.category.toLowerCase().includes(globalSearchTerm.toLowerCase()))
+      );
+    }
+
+    return articles;
+  }, [sortedArticles, selectedSources, activeLanguage, globalSearchTerm]);
 
   const processedTopics = useMemo(() => {
     let topics = newsData.topics || [];
 
-    // Search filter
+    // Apply topic-specific search first
     if (searchTerm) {
         topics = topics.filter(topic => 
             topic.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
             topic.description.toLowerCase().includes(searchTerm.toLowerCase())
         );
+    }
+
+    // Apply global search to topics
+    if (globalSearchTerm) {
+      topics = topics.filter(topic => 
+        topic.name.toLowerCase().includes(globalSearchTerm.toLowerCase()) ||
+        topic.description.toLowerCase().includes(globalSearchTerm.toLowerCase()) ||
+        topic.articles.some(article => 
+          article.title.toLowerCase().includes(globalSearchTerm.toLowerCase()) ||
+          article.source.toLowerCase().includes(globalSearchTerm.toLowerCase())
+        )
+      );
     }
 
     // Sorting
@@ -55,7 +80,7 @@ const NewsFeed = ({ newsData, selectedSources, activeLanguage, viewMode, onFilte
         const dateB = b.articles.reduce((latest, article) => new Date(article.date) > latest ? new Date(article.date) : latest, new Date(0));
         return dateB - dateA;
     });
-  }, [newsData.topics, sortOrder, searchTerm]);
+  }, [newsData.topics, sortOrder, searchTerm, globalSearchTerm]);
 
 
   const data = viewMode === 'articles' ? filteredArticles : processedTopics;
@@ -81,58 +106,60 @@ const NewsFeed = ({ newsData, selectedSources, activeLanguage, viewMode, onFilte
     if (observer.current) observer.current.disconnect();
     observer.current = new IntersectionObserver(entries => {
       if (entries[0].isIntersecting && items.length < data.length) {
-        setItems(prevItems => [
+        // show skeleton cards briefly
+        setLoading(true);
+        setTimeout(() => {
+          setItems(prevItems => [
             ...prevItems,
             ...data.slice(prevItems.length, prevItems.length + ITEMS_PER_PAGE)
-        ]);
+          ]);
+        }, 50);
       }
     });
     if (node) observer.current.observe(node);
   }, [loading, items.length, data]);
 
+  // deactivate loading when items updated
+  useEffect(() => {
+    setLoading(false);
+  }, [items]);
+
   return (
     <>
-      <div className="news-feed-header">
-        <h2>{viewMode === 'articles' ? "Fil d'Actualités de l'IA" : "Sujets d'Actualités de l'IA"}</h2>
-        <p>{viewMode === 'articles' ? "Articles sélectionnés des meilleures sources IA" : "Sujets regroupés à partir de plusieurs sources"}</p>
-      </div>
-
-      {viewMode === 'articles' && (
-        <div className="feed-controls">
-          <div className="feed-controls-left">
-            <button 
-              className="feed-action-button" 
-              onClick={onFilterSourcesClick}
-              aria-label="Ouvrir le filtre des sources"
-            >
-              <FilterIcon />
-              <span>Sources</span>
-            </button>
-          </div>
-          <div className="feed-controls-right">
-            <RefreshButton onRefreshData={onRefreshData} />
-          </div>
-        </div>
-      )}
-
-      {viewMode === 'topics' && (
-        <div className="topic-controls">
-            <div className="topic-search">
+      {/* Controls wrapper now only used for topic-specific utilities */}
+      <div className="feed-controls-container">
+        {viewMode === 'topics' && (
+          <div className="topic-controls-horizontal">
+            <div className="topic-controls-left">
+              <div className="topic-search">
                 <input 
                     type="text" 
-                    placeholder="Rechercher des sujets..."
+                    placeholder="Filtrer les sujets..."
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
                 />
+              </div>
             </div>
-            <div className="topic-sort">
-                <span>Trier par:</span>
-                <button className={sortOrder === 'sources' ? 'active' : ''} onClick={() => setSortOrder('sources')}>Sources</button>
-                <button className={sortOrder === 'articles' ? 'active' : ''} onClick={() => setSortOrder('articles')}>Articles</button>
-                <button className={sortOrder === 'recency' ? 'active' : ''} onClick={() => setSortOrder('recency')}>Récence</button>
+            
+            <div className="topic-controls-center" />
+            
+            <div className="topic-controls-right">
+              <div className="topic-sort">
+                  <span>Trier par:</span>
+                  <button className={sortOrder === 'sources' ? 'active' : ''} onClick={() => setSortOrder('sources')}>Sources</button>
+                  <button className={sortOrder === 'articles' ? 'active' : ''} onClick={() => setSortOrder('articles')}>Articles</button>
+                  <button className={sortOrder === 'recency' ? 'active' : ''} onClick={() => setSortOrder('recency')}>Récence</button>
+              </div>
             </div>
-        </div>
-      )}
+          </div>
+        )}
+        
+        {globalSearchTerm && (
+          <div className="search-results-count">
+            {data.length} résultat{data.length !== 1 ? 's' : ''} trouvé{data.length !== 1 ? 's' : ''}
+          </div>
+        )}
+      </div>
 
       <Masonry
         breakpointCols={masonryBreakpointColumns}
@@ -164,16 +191,24 @@ const NewsFeed = ({ newsData, selectedSources, activeLanguage, viewMode, onFilte
       {!loading && items.length === 0 && (
         <div className="no-articles-message">
           <div className="no-articles-icon">
-            {viewMode === 'articles' ? '📰' : '📁'}
+            {globalSearchTerm ? '🔍' : (viewMode === 'articles' ? '📰' : '📁')}
           </div>
-          <h3>{viewMode === 'articles' ? 'Aucun article trouvé' : 'Aucun sujet trouvé'}</h3>
+          <h3>
+            {globalSearchTerm 
+              ? 'Aucun résultat trouvé' 
+              : (viewMode === 'articles' ? 'Aucun article trouvé' : 'Aucun sujet trouvé')
+            }
+          </h3>
           <p>
-            {viewMode === 'articles' 
-              ? 'Aucun article ne correspond aux filtres sélectionnés.' 
-              : 'Aucun sujet ne correspond aux critères de recherche.'
+            {globalSearchTerm 
+              ? `Aucun ${viewMode === 'articles' ? 'article' : 'sujet'} ne correspond à "${globalSearchTerm}".`
+              : (viewMode === 'articles' 
+                ? 'Aucun article ne correspond aux filtres sélectionnés.' 
+                : 'Aucun sujet ne correspond aux critères de recherche.'
+              )
             }
           </p>
-          {viewMode === 'articles' && (
+          {!globalSearchTerm && viewMode === 'articles' && (
             <div className="no-articles-actions">
               <RefreshButton onRefreshData={onRefreshData} />
               <button 
@@ -181,8 +216,7 @@ const NewsFeed = ({ newsData, selectedSources, activeLanguage, viewMode, onFilte
                 onClick={onFilterSourcesClick}
                 aria-label="Modifier les filtres des sources"
               >
-                <FilterIcon />
-                <span>Modifier les filtres</span>
+                Modifier les filtres
               </button>
             </div>
           )}

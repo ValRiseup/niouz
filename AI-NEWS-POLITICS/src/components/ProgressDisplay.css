@@ -1,0 +1,220 @@
+.progress-display {
+  /* Enhanced Glassmorphism Effect */
+  background: rgba(255, 255, 255, 0.18);
+  backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(30px);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 1.5rem;
+  padding: 2.5rem;
+  margin: 2rem 0;
+  box-shadow: 
+    0 20px 60px rgba(0, 0, 0, 0.15),
+    0 8px 30px rgba(0, 0, 0, 0.1),
+    inset 0 2px 0 rgba(255, 255, 255, 0.3);
+  position: relative;
+  overflow: hidden;
+  animation: float-progress 4s ease-in-out infinite;
+}
+
+.progress-display::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, 
+    transparent,
+    rgba(59, 130, 246, 0.8),
+    rgba(16, 185, 129, 0.8),
+    transparent);
+  z-index: 1;
+}
+
+.progress-display::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: conic-gradient(
+    from 0deg at 50% 50%,
+    transparent 0deg,
+    rgba(59, 130, 246, 0.05) 90deg,
+    transparent 180deg,
+    rgba(16, 185, 129, 0.05) 270deg,
+    transparent 360deg
+  );
+  animation: rotate-progress 20s linear infinite;
+  pointer-events: none;
+  z-index: -1;
+}
+
+@keyframes rotate-progress {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.progress-container {
+  max-width: 500px;
+  margin: 0 auto;
+  text-align: center;
+  position: relative;
+  z-index: 2;
+}
+
+.progress-message {
+  margin-bottom: 2rem;
+}
+
+.progress-icon {
+  font-size: 2.5rem;
+  display: block;
+  margin-bottom: 0.75rem;
+  background: linear-gradient(135deg, #3b82f6, #10b981);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: pulse-enhanced 2s ease-in-out infinite;
+  filter: drop-shadow(0 4px 8px rgba(59, 130, 246, 0.3));
+}
+
+@keyframes pulse-enhanced {
+  0%, 100% { 
+    transform: scale(1);
+    filter: drop-shadow(0 4px 8px rgba(59, 130, 246, 0.3));
+  }
+  50% { 
+    transform: scale(1.15);
+    filter: drop-shadow(0 6px 12px rgba(59, 130, 246, 0.5));
+  }
+}
+
+.progress-message p {
+  font-size: 1.2rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, #1f2937, #374151);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin: 0;
+  text-shadow: 0 2px 4px rgba(255, 255, 255, 0.1);
+}
+
+.progress-bar-container {
+  width: 100%;
+  height: 12px;
+  background: rgba(229, 231, 235, 0.3);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 1.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 
+    inset 0 2px 4px rgba(0, 0, 0, 0.1),
+    0 1px 2px rgba(255, 255, 255, 0.1);
+}
+
+.progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, #3b82f6, #10b981, #1e40af);
+  border-radius: 8px;
+  transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  box-shadow: 
+    0 2px 8px rgba(59, 130, 246, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+.progress-bar::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: linear-gradient(90deg, 
+    transparent, 
+    rgba(255, 255, 255, 0.8), 
+    transparent);
+  animation: shimmer-enhanced 2s infinite;
+}
+
+@keyframes shimmer-enhanced {
+  0% { 
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% { 
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
+
+.progress-percentage {
+  font-size: 1.4rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, #3b82f6, #10b981);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter: drop-shadow(0 2px 4px rgba(59, 130, 246, 0.3));
+}
+
+/* Floating animation for the entire progress display */
+@keyframes float-progress {
+  0%, 100% { 
+    transform: translateY(0px);
+  }
+  50% { 
+    transform: translateY(-4px);
+  }
+}
+
+@media (max-width: 768px) {
+  .progress-display {
+    padding: 2rem;
+    margin: 1.5rem 0;
+    border-radius: 1.25rem;
+  }
+
+  .progress-icon {
+    font-size: 2rem;
+  }
+
+  .progress-message p {
+    font-size: 1.1rem;
+  }
+
+  .progress-percentage {
+    font-size: 1.2rem;
+  }
+
+  .progress-bar-container {
+    height: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .progress-display {
+    padding: 1.5rem;
+    margin: 1rem 0;
+  }
+
+  .progress-icon {
+    font-size: 1.8rem;
+  }
+
+  .progress-message p {
+    font-size: 1rem;
+  }
+
+  .progress-percentage {
+    font-size: 1.1rem;
+  }
+} 
